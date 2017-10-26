@@ -138,6 +138,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     public void initRadioButton() {
+
         Drawable drawable_Pager = getResources().getDrawable(R.drawable.selector_main_pager);
         drawable_Pager.setBounds(0,0,70,70);
         rg_main_pager.setCompoundDrawables(null,drawable_Pager,null,null);
