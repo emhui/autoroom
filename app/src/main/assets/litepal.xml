@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="AutoRoom" />
+
+    <version value="1" />
+
+
+    <list>
+<!--        <mapping class="com.ycxy.ymh.autoroom.bean.Total" />-->
+        <mapping class="com.ycxy.ymh.autoroom.bean.BuildingBean" />
+        <mapping class="com.ycxy.ymh.autoroom.bean.FloorBean" />
+        <mapping class="com.ycxy.ymh.autoroom.bean.Person" />
+    </list>
+
+
+</litepal>

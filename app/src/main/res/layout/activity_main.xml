@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ycxy.ymh.autoroom.activity.MainActivity">
+
+    <include layout="@layout/titlebar" />
+
+    <FrameLayout
+        android:id="@+id/frame_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+    </FrameLayout>
+
+    <RadioGroup
+        android:id="@+id/rg_main"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <RadioButton
+            android:id="@+id/rg_main_pager"
+            style="@style/botttom_tag_style"
+            android:drawableTop="@mipmap/home"
+            android:text="首页"/>
+
+        <RadioButton
+            android:id="@+id/rg_main_per"
+            android:drawableTop="@mipmap/per"
+            style="@style/botttom_tag_style"
+             android:text="个人"/>
+    </RadioGroup>
+</LinearLayout>

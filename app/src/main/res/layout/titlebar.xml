@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="#1157F7">
+    <TextView
+        style="@style/titile"
+        android:text="Per"
+        android:layout_alignParentLeft="true"/>
+    <TextView
+        android:textStyle="italic"
+        style="@style/titile"
+        android:text="AutoRoom"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        style="@style/titile"
+        android:text="Home"
+        android:layout_alignParentRight="true"/>
+
+</RelativeLayout>
