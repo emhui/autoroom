@@ -6,7 +6,13 @@
     android:background="#22390238"
     tools:context="com.ycxy.ymh.autoroom.activity.SplashActivity">
 
-    <TextView
+    <ImageView
+        android:id="@+id/tv_slogan"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/icon"/>
+<!--    <TextView
         android:textStyle="italic"
         android:id="@+id/tv_slogan"
         android:layout_width="wrap_content"
@@ -15,7 +21,7 @@
         android:layout_centerVertical="true"
         android:text="Auto Room"
         android:textColor="#000000"
-        android:textSize="30sp" />
+        android:textSize="30sp" />-->
 
     <ProgressBar
         android:layout_width="wrap_content"
@@ -34,7 +40,7 @@
         android:layout_marginBottom="20dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/splash_time"
-        android:text="3"
+        android:text="1"
         android:textColor="#000000"
         android:textSize="18sp" />
 </RelativeLayout>

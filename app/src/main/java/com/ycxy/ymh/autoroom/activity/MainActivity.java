@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.ycxy.ymh.autoroom.R;
 import com.ycxy.ymh.autoroom.base.BaseFragment;
@@ -145,5 +147,28 @@ public class MainActivity extends FragmentActivity {
         Drawable drawable_Per = getResources().getDrawable(R.drawable.selector_main_per);
         drawable_Per.setBounds(0,0,70,70);
         rg_main_per.setCompoundDrawables(null,drawable_Per,null,null);
+    }
+
+    private long mExitTime;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+            exit();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public void exit() {
+        if ((System.currentTimeMillis() - mExitTime) > 2000) {
+            Toast.makeText(MainActivity.this, "再按一次退出", Toast.LENGTH_SHORT).show();
+            mExitTime = System.currentTimeMillis();
+        } else {
+            //MyConfig.clearSharePre(this, "users");
+            finish();
+            System.exit(0);
+        }
     }
 }

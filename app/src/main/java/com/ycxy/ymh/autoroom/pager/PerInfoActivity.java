@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.ycxy.ymh.autoroom.R;
 import com.ycxy.ymh.autoroom.activity.LoginActivity;
+import com.ycxy.ymh.autoroom.activity.MainActivity;
 import com.ycxy.ymh.autoroom.base.BaseFragment;
 import com.ycxy.ymh.autoroom.util.Constant;
 import com.ycxy.ymh.autoroom.util.SPUtil;

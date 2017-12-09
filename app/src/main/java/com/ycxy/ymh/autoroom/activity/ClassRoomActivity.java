@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import com.ycxy.ymh.autoroom.bean.Total;
 import com.ycxy.ymh.autoroom.util.Constant;
 import com.ycxy.ymh.autoroom.util.JSONUtils;
 import com.ycxy.ymh.autoroom.util.SPUtil;
+import com.ycxy.ymh.autoroom.view.DividerLinearItemDecoration;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -60,6 +62,8 @@ public class ClassRoomActivity extends AppCompatActivity {
     private TextView tv_class_room_time;
     private ImageView iv_back;
 
+    private  ClassRoomAdapter adapter;
+
     private String updataTime = "";
     private Handler handler = new Handler() {
         @Override
@@ -67,6 +71,11 @@ public class ClassRoomActivity extends AppCompatActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case UPDATETIME:
+                    // 更新数据
+                    classroomBeanList.removeAll(classroomBeanList);
+                    tempList = buildingBean.getFloor().get(floorPosition);
+                    classroomBeanList.addAll(tempList);
+                    adapter.notifyDataSetChanged();
                     tv_class_room_time.setText(updataTime);
                     break;
             }
@@ -84,8 +93,10 @@ public class ClassRoomActivity extends AppCompatActivity {
 
     private void initData() {
         Intent intent = getIntent();
-        buildingBean = (BuildingBean) intent.getSerializableExtra(Constant.BUILDING);
+        String buildingJSON = SPUtil.getInfoFromLocal(this,Constant.BUILDINGJSON);
         buildingPosition = intent.getIntExtra(Constant.BUILDINGPOSITION, 0);
+        Total total  = JSONUtils.parseTotalJSON(buildingJSON);
+        buildingBean = total.getBuilding().get(buildingPosition);
         classroomBeanList = new ArrayList<>();
         classroomBeanList.addAll(buildingBean.getFloor().get(0));
         floorNum = buildingBean.getFloorTotal();
@@ -99,16 +110,17 @@ public class ClassRoomActivity extends AppCompatActivity {
         srl_class_room = (SwipeRefreshLayout) this.findViewById(R.id.srl_class_room);
         recyclerView = (RecyclerView) this.findViewById(R.id.rv_class_room);
         tv_class_room_time = (TextView) this.findViewById(R.id.tv_class_room_time);
-        // tv_class_room_time.setText();
-
         iv_back = (ImageView) this.findViewById(R.id.iv_back);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
 
-        final ClassRoomAdapter adapter = new ClassRoomAdapter(classroomBeanList, this);
+        adapter = new ClassRoomAdapter(classroomBeanList, this);
         recyclerView.setAdapter(adapter);
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        recyclerView.addItemDecoration(new DividerLinearItemDecoration(this, LinearLayout.HORIZONTAL));
+        recyclerView.addItemDecoration(new DividerLinearItemDecoration(this, LinearLayout.VERTICAL));
 
         // 下拉框选项
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -138,9 +150,7 @@ public class ClassRoomActivity extends AppCompatActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        // huo qu xin shu ju
                         reFresh();
-                        // rePost();
                     }
                 }).start();
             }

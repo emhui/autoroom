@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -83,6 +84,7 @@ public class LoginActivity extends AppCompatActivity{
         }
 
         // 联网注册
+
     }
 
     private void login() {
@@ -98,7 +100,6 @@ public class LoginActivity extends AppCompatActivity{
         }
 
         checkOnNet();
-
 
     }
 
@@ -128,10 +129,10 @@ public class LoginActivity extends AppCompatActivity{
                         Log.d(TAG, "onResponse: " + response);
                         try {
                             JSONObject jsonObject = new JSONObject(response);
+                            // 数据是否返回成功
                             String result = jsonObject.getString("result");
-                            Log.d(TAG, "onResponse: "+ response);
                             if (result.equals("1")) {
-                                // 将数据存储到sp中
+                                // 登陆成功,将数据存储到sp中
                                 loginSuccess(response);
                             } else {
                                 String message = jsonObject.getString("message");
@@ -145,35 +146,28 @@ public class LoginActivity extends AppCompatActivity{
                 });
     }
 
+    /**
+     * 1. 数据保存到本地
+     * 2. 关闭本页面，跳转到首页
+     * @param response
+     */
     public void loginSuccess(String response){
         // 保存数据，方便以后取出数据
         SPUtil.saveInfoToLocal(LoginActivity.this,
                 response,Constant.BUILDINGJSON);
         SPUtil.saveInfoToLocal(this,username,Constant.USERNAME);
-        // save data to database
+        // 保存到本地数据库
         String usernameAndPassword = username + "," + password;
         SPUtil.saveInfoToLocal(this,usernameAndPassword,Constant.USERNAMEANDPASSWORD);
+        // 解析json数据
         parseJson(response);
-
         Toast.makeText(this,"登陆成功",Toast.LENGTH_SHORT).show();
         startMainActivity();
     }
 
     public void parseJson(String response){
-        Person man = new Person(1,"one piece");
-
-        boolean f = man.save();
-        Log.d(TAG, "parseJson: f -->" + f);
-/*
-        FloorBean floor = new FloorBean();
-        floor.setLamp(1);
-        floor.setLampTotal(2);
-        floor.setClassroomId(1111);
-        floor.setClassroomName("dafsadf");
-        floor.save();*/
 
         total = JSONUtils.parseTotalJSON(response);
-       // Boolean flag = total.save();
 
         List<BuildingBean> buildingBeanList = total.getBuilding();
         for (int i = 0; i < buildingBeanList.size(); i++) {
@@ -184,11 +178,31 @@ public class LoginActivity extends AppCompatActivity{
                 List<FloorBean> floorBeanList = buildingBean.getFloor().get(j);
                 for (int k = 0; k < floorBeanList.size(); k++) {
                     FloorBean floorBean = floorBeanList.get(k);
-                  //  Log.d(TAG, "parseJson: "+ floorBean.toString());
-                    //boolean res = floorBean.update();
-                    //Log.d(TAG, "parseJson: " + res);
                 }
             }
+        }
+    }
+
+    private long mExitTime;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+            exit();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public void exit() {
+        if ((System.currentTimeMillis() - mExitTime) > 2000) {
+            Toast.makeText(LoginActivity.this, "再按一次退出", Toast.LENGTH_SHORT).show();
+            mExitTime = System.currentTimeMillis();
+        } else {
+            //MyConfig.clearSharePre(this, "users");
+            finish();
+            System.exit(0);
         }
     }
 }

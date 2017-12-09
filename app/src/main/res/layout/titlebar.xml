@@ -10,7 +10,7 @@
     <TextView
         android:textStyle="italic"
         style="@style/titile"
-        android:text="AutoRoom"
+        android:text="GreenRoom"
         android:layout_centerHorizontal="true"
         />
 

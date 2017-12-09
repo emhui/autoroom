@@ -16,7 +16,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private static final int SLPAHTIME = 0;
     private TextView tv_splash_time;
-    private int time = 3;
+    private int time = 1;
     private boolean isLogin = false;
 
     Handler handler = new Handler() {

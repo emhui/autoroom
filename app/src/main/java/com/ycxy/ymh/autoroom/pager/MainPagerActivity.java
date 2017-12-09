@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -76,9 +77,6 @@ public class MainPagerActivity extends BaseFragment {
 
         BuildingAdapter adapter = new BuildingAdapter(buildingList,mContext);
         rv_building.setAdapter(adapter);
-
-
-
     }
 
 
@@ -94,6 +92,7 @@ public class MainPagerActivity extends BaseFragment {
         // 2. 重新请求数据，并保存
         rePost();
     }
+
 
 
     public void rePost(){
@@ -119,8 +118,8 @@ public class MainPagerActivity extends BaseFragment {
                             String result = jsonObject.getString("result");
                             if (result.equals("1")) {
                                 SPUtil.saveInfoToLocal(mContext,response,Constant.BUILDINGJSON);
-                                Total total = JSONUtils.parseTotalJSON(response);
-                                buildingList = total.getBuilding();
+/*                                Total total = JSONUtils.parseTotalJSON(response);
+                                buildingList = total.getBuilding();*/
                             } else {
                                 String message = jsonObject.getString("message");
                                 Toast.makeText(mContext, message,Toast.LENGTH_SHORT).show();
@@ -132,4 +131,5 @@ public class MainPagerActivity extends BaseFragment {
                     }
                 });
     }
+
 }

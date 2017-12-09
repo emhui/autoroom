@@ -6,13 +6,15 @@
     android:orientation="vertical"
     android:layout_margin="20dp">
 s
-    <TextView
+    <ImageView
+        android:id="@+id/iv_building"
         android:layout_width="140dp"
         android:layout_height="140dp"
-        android:background="@mipmap/building_house" />
+        android:background="@mipmap/dorm" />
+    <!--AADC59-->
     <TextView
         android:id="@+id/tv_building"
-        android:textColor="#AADC59"
+        android:textColor="#af000000"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_width="wrap_content"
